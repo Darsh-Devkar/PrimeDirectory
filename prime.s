@@ -73,18 +73,20 @@ gcd:
 
 	.globl	prime
 prime:
-	compq $0, %rdi
+	cmpq $0, %rdi
+	je ..not_prime_conditional
+	cmpq $1, %rdi
 	je ..not_prime_conditional
 	movq $2, %rsi
 	call .prime_recursive
 	retq
 .prime_recursive:
-	push rdi
+	push %rdi
 	call gcd
 	cmpq $1, %rax
 	jne ..not_prime_return
 	incq %rsi
-	pop rdi
+	popq %rdi
 	cmpq %rdi, %rsi
 	jl .prime_recursive
 	movq $1, %rax
