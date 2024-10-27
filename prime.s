@@ -24,8 +24,7 @@ modulo:
 	cmpq %rsi, %rax
 	jl ..modulo_return
 	subq %rsi, %rax
-	call .modulo_recursive
-	retq
+	jump .modulo_recursive
 ..modulo_return_inf:
 	xorq %rax, %rax
 	retq
