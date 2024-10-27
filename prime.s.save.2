@@ -16,7 +16,8 @@
 	.globl	modulo
 modulo:
 	movq %rdi, %rax
-	cmpq $0, %rsi
+	cmpq
+ $0, %rsi
 	je ..modulo_return_inf
 	call .modulo_recursive
 	retq
@@ -49,16 +50,16 @@ modulo:
 gcd:
 	cmpq $0, %rsi
 	je .gcd_return
+
 	pushq %rdi
-	pushq %rsi
+
 	call modulo
-	popq %rsi
-	popq %rdi
-	movq %rsi, %rdi
-	movq %rax, %rsi
+	movq rsi, rdi
+	movq rax, rsi
 	call gcd
 
 .gcd_return:
+	popq %rdi
 	movq %rdi, %rax
 	retq
 
@@ -75,30 +76,29 @@ gcd:
 ##           prime routine (prime using gcd)              ##
 ############################################################
 
-	.globl prime
+	.globl	prime
 prime:
-	cmpq $2, %rdi
-    jl ..not_prime_return
-    movq $2, %rsi
-    call .prime_recursive
-    retq
+	cmpq $0, %rdi
+	je ..not_prime_conditional
+	cmpq $1, %rdi
+	je ..not_prime_conditional
+	movq $2, %rsi
+	call .prime_recursive
+	retq
 .prime_recursive:
 	push %rdi
-	push %rsi
-    call gcd
-	pop %rsi
-	pop %rdi
-    cmpq $1, %rax
-    jne ..not_prime_return
-    addq $1, %rsi
-    cmpq %rsi, %rdi
-    jle .prime_recursive
-    movq $1, %rax
-    retq
-
+	call gcd
+	cmpq $1, %rax
+	jne ..not_prime_return
+	incq %rsi
+	popq %rdi
+	cmpq %rdi, %rsi
+	jl .prime_recursive
+	movq $1, %rax
+	retq
 ..not_prime_return:
-    movq $0, %rax
-    retq
+	movq $0, %rax
+	retq
 
 #	xorq	%rax, %rax
 #	retq
