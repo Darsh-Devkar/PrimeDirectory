@@ -73,7 +73,7 @@ gcd:
 ##           prime routine (prime using gcd)              ##
 ############################################################
 
-	.globl	prime
+	.globl prime
 prime:
 	cmpq $0, %rdi
 	je ..not_prime_return
@@ -81,16 +81,17 @@ prime:
 	je ..not_prime_return
 	movq $2, %rsi
 	call .prime_recursive
-	retq
 .prime_recursive:
-	push %rdi
+	cmpq %rdi, %rsi
+	jge ..prime_return
+	pushq %rdi
 	call gcd
+	popq %rdi
 	cmpq $1, %rax
 	jne ..not_prime_return
-	incq %rsi
-	popq %rdi
-	cmpq %rdi, %rsi
-	jl .prime_recursive
+	addq $1, %rsi
+	jmp .prime_recursive
+..prime_return:
 	movq $1, %rax
 	retq
 ..not_prime_return:
