@@ -16,8 +16,7 @@
 	.globl	modulo
 modulo:
 	movq %rdi, %rax
-	cmpq $0, %rsi
-	je ..modulo_return_inf
+	#add a zero check
 	call .modulo_recursive
 	retq
 .modulo_recursive:
@@ -26,11 +25,8 @@ modulo:
 	subq %rsi, %rax
 	call .modulo_recursive
 	retq
-..modulo_return_inf:
-	xorq %rax, %rax
-	retq
 ..modulo_return:
-	retq
+	ret
 
 #	xorq	%rax, %rax
 #	retq
@@ -49,16 +45,18 @@ modulo:
 gcd:
 	cmpq $0, %rsi
 	je .gcd_return
+
 	pushq %rdi
+
 	call modulo
-	pop %rdi
-	movq %rsi, %rdi
-	movq %rax, %rsi
+	movq rsi, rdi
+	movq rax, rsi
 	call gcd
-	retq
+
 .gcd_return:
+	popq %rdi
 	movq %rdi, %rax
-	retq
+	ret
 
 #	xorq	%rax, %rax
 #	retq
@@ -75,27 +73,8 @@ gcd:
 
 	.globl	prime
 prime:
-	cmpq $0, %rdi
-	je ..not_prime_conditional
-	cmpq $1, %rdi
-	je ..not_prime_conditional
-	movq $2, %rsi
-	call .prime_recursive
-	retq
-.prime_recursive:
-	push %rdi
-	call gcd
-	cmpq $1, %rax
-	jne ..not_prime_return
-	incq %rsi
-	popq %rdi
-	cmpq %rdi, %rsi
-	jl .prime_recursive
-	movq $1, %rax
-	retq
-..not_prime_return:
-	movq $0, %rax
-	retq
+
+	# TO DO: write this function
 
 #	xorq	%rax, %rax
 #	retq
