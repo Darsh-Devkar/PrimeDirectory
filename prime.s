@@ -26,7 +26,7 @@ modulo:
 	call .modulo_recursive
 	retq
 ..modulo_return:
-	ret
+	retq
 
 #	xorq	%rax, %rax
 #	retq
@@ -56,7 +56,7 @@ gcd:
 .gcd_return:
 	popq %rdi
 	movq %rdi, %rax
-	ret
+	retq
 
 #	xorq	%rax, %rax
 #	retq
@@ -73,11 +73,29 @@ gcd:
 
 	.globl	prime
 prime:
-
-	# TO DO: write this function
-
-	xorq	%rax, %rax
+	compq $0, %rdi
+	je ..not_prime_conditional
+	movq $2, %rsi
+	call .prime_recursive
 	retq
+.prime_recursive:
+	push rdi
+	call gcd
+	cmpq $1, %rax
+	jne ..not_prime_return
+	incq %rsi
+	pop rdi
+	cmpq %rdi, %rsi
+	jl .prime_recursive
+	movq $1, %rax
+	retq
+	
+..not_prime_return:
+	movq $0, %rax
+	retq
+
+#	xorq	%rax, %rax
+#	retq
 
 ############################################################
 ##                end of prime routine                    ##
