@@ -17,7 +17,7 @@
 modulo:
 	movq %rdi, %rax
 	cmpq $0, %rsi
-	je ..modulo_return_infq
+	je ..modulo_return_inf
 .modulo_loop:
 	cmpq %rsi, %rax
 	jl ..modulo_return
