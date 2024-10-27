@@ -51,11 +51,11 @@ gcd:
 	je .gcd_return
 	pushq %rdi
 	call modulo
-	pop %rdi
+	popq %rdi
 	movq %rsi, %rdi
 	movq %rax, %rsi
 	call gcd
-	retq
+
 .gcd_return:
 	movq %rdi, %rax
 	retq
