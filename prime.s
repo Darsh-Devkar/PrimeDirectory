@@ -76,9 +76,9 @@ gcd:
 	.globl	prime
 prime:
 	cmpq $0, %rdi
-	je ..not_prime_conditional
+	je ..not_prime_return
 	cmpq $1, %rdi
-	je ..not_prime_conditional
+	je ..not_prime_return
 	movq $2, %rsi
 	call .prime_recursive
 	retq
