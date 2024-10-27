@@ -17,15 +17,12 @@
 modulo:
 	movq %rdi, %rax
 	cmpq $0, %rsi
-	je ..modulo_return_inf
-	call .modulo_recursive
-	retq
-.modulo_recursive:
+	je ..modulo_return_infq
+.modulo_loop:
 	cmpq %rsi, %rax
 	jl ..modulo_return
 	subq %rsi, %rax
-	call .modulo_recursive
-	retq
+	jmp .modulo_loop
 ..modulo_return_inf:
 	xorq %rax, %rax
 	retq
