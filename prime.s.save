@@ -3,7 +3,8 @@
 ############################################################
 ## CSO1 Spring 2023 - Homework 5 
 ## 
-## Computing ID: smt3ft 
+## Computing ID: smt3ft
+## 
 ## You must update your ID above to receive credit.  Note
 ## that this is an individual assignment and you may NOT
 ## use a compiler.
@@ -15,21 +16,11 @@
 
 	.globl	modulo
 modulo:
-	movq %rdi, %rax
-	#add a zero check
-	call .modulo_recursive
-	retq
-.modulo_recursive:
-	cmpq %rsi, %rax
-	jl ..modulo_return
-	subq %rsi, %rax
-	call .modulo_recursive
-	retq
-..modulo_return:
-	ret
 
-#	xorq	%rax, %rax
-#	retq
+	# TO DO: write this function
+	
+	xorq	%rax, %rax
+	retq
 
 ############################################################
 ##                 end of modulo routine                  ##
@@ -43,19 +34,11 @@ modulo:
 
 	.globl	gcd
 gcd:
-	cmpq $0, %rsi
-	jne .gcd_return
-	call modulo
-	movq rsi, rdi
-	movq rax, rsi
-	call gcd
 
-.gcd_return:
-	movq %rdi, %rax
-	ret
+	# TO DO: write this function
 
-#	xorq	%rax, %rax
-#	retq
+	xorq	%rax, %rax
+	retq
 
 ############################################################
 ##                 end of gcd routine                     ##
