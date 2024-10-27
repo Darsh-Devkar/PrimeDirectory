@@ -15,11 +15,21 @@
 
 	.globl	modulo
 modulo:
-
-	# TO DO: write this function
-	
-	xorq	%rax, %rax
+	movq %rdi, %rax
+	#add a zero check
+	call .modulo_recursive
 	retq
+.modulo_recursive:
+	cmpq %rsi, %rax
+	jl ..modulo_return
+	subq %rsi, %rax
+	call .modulo_recursive
+	retq
+..modulo_return:
+	ret
+
+#	xorq	%rax, %rax
+#	retq
 
 ############################################################
 ##                 end of modulo routine                  ##
