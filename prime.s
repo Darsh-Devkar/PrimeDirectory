@@ -44,13 +44,17 @@ modulo:
 	.globl	gcd
 gcd:
 	cmpq $0, %rsi
-	jne .gcd_return
+	je .gcd_return
+
+	pushq %rdi
+
 	call modulo
 	movq rsi, rdi
 	movq rax, rsi
 	call gcd
 
 .gcd_return:
+	popq %rdi
 	movq %rdi, %rax
 	ret
 
