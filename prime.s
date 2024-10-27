@@ -17,19 +17,18 @@
 modulo:
 	cmpq $0, %rsi
 	je ..modulo_return_inf
+	movq %rdi, %rax
 	call .modulo_loop
 	retq
 .modulo_loop:
-	subq %rsi, %rdi
-	cmpq %rsi, %rdi
+	cmpq %rsi, %rax
 	jl ..modulo_return
-	call .modulo_loop
-	retq
+	subq %rsi, %rax
+	jmp .modulo_loop
 ..modulo_return_inf:
 	xorq %rax, %rax
 	retq
 ..modulo_return:
-	movq %rdi, %rax
 	retq
 
 #	xorq	%rax, %rax
