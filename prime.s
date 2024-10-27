@@ -15,21 +15,18 @@
  
 	.globl	modulo
 modulo:
-	movq %rdi, %rax
 	cmpq $0, %rsi
 	je ..modulo_return_inf
-	call .modulo_recursive
-	retq
-.modulo_recursive:
-	cmpq %rsi, %rax
+.modulo_loop:
+	subq %rsi, %rdi
+	cmpq %rsi, %rdi
 	jl ..modulo_return
-	subq %rsi, %rax
-	call .modulo_recursive
-	retq
+	call .modulo_loop
 ..modulo_return_inf:
 	xorq %rax, %rax
 	retq
 ..modulo_return:
+	movq %rdi, %rax
 	retq
 
 #	xorq	%rax, %rax
