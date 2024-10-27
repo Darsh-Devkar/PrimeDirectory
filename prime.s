@@ -18,11 +18,14 @@ modulo:
 	movq %rdi, %rax
 	cmpq $0, %rsi
 	je ..modulo_return_inf
-.modulo_loop:
+	call .modulo_recursive
+	retq
+.modulo_recursive:
 	cmpq %rsi, %rax
 	jl ..modulo_return
 	subq %rsi, %rax
-	jmp .modulo_loop
+	call .modulo_recursive
+	retq
 ..modulo_return_inf:
 	xorq %rax, %rax
 	retq
