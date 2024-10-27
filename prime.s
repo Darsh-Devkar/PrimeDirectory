@@ -12,7 +12,7 @@
 ############################################################
 ##   modulo routine (calculates mod using add/subtract)   ##
 ############################################################
-
+ 
 	.globl	modulo
 modulo:
 	movq %rdi, %rax
